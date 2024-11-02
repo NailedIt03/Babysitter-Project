@@ -12,3 +12,5 @@ p2 {position: absolute; top:0px; right:0px; margin-top:10px; margin-right:120px;
 p1 {position:absolute; top:0px; right:0px; margin-top:10px; margin-right:340px; font-size:1.5em;}
 
 p4 {height:100vh; display:flex; align-items:flex-start; justify-content:center; margin:0; padding-top:100px; font-size:2.25em;}
+
+img {position:absolute; top:-30px; left:-80px; width: 400px; height:auto;}
