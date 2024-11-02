@@ -1,0 +1,12 @@
+body {
+    position: relative;
+    background-color: #fffffffd;
+    font-family: Arial, sans-serif;
+}
+
+
+p3 {position:absolute; top: 0px; right: 0px;
+margin-top: 10px;margin-right: 20px;}
+
+p2 {position: absolute; top:0px; right: 0px;margin-top: 10px;margin-right: 80px;
+}
