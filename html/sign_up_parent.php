@@ -35,12 +35,15 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     rel="stylesheet">
 </head>
 <body>
-<div id="box">
+<div class="teal-rectangle">
+    <h1 class="sign-up-heading">SIGN UP</h1>
  <form method="post">
+    <h2>Username</h2>
  <input id="text" type="text" name="user_name"><br><br>
+ <h2>Password</h2>
 <input id="text" type="password" name="password"><br><br>
 
-<input id="button" type="submit" value="Sign Up"><br><br>
+<input class="button-sign-up" type="submit" value="Sign Up"><br><br>
 
 <a href="log_in_parent.php">Click to Log In</a><br><br>
  </form>
