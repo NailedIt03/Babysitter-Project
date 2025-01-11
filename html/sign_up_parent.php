@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nestle - sign up (parent)</title>
-    <link rel="stylesheet" href="../css/style_sign_up_parent.css">
+    <link rel="stylesheet" href="../css/style_sign_up.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" 
     rel="stylesheet">
 </head>

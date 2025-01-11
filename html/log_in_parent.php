@@ -14,13 +14,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     $query = "select * from parents where user_name = '$user_name' limit 1";
     $result = mysqli_query($con, $query);
 
-    mysqli_query($con,$query);
+    mysqli_query(mysql: $con,query: $query);
 
     if($result)
     {
         if ($result && mysqli_num_rows($result) > 0) {
             $user_data = mysqli_fetch_assoc($result);
-            if($user_data['password'] === $user_name)
+            if($user_data['password'] === $password)
             {
                 $_SESSION['user_id'] = $user_data['user_id'];
                 header("Location: main_page.php");
@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 }else
 {
     echo "Please enter some valid infomation!";
-}
+} 
 }
 
  ?>
@@ -42,7 +42,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nestle - log in (parent)</title>
-    <link rel="stylesheet" href="../css/style_log_in_parent.css">
+    <link rel="stylesheet" href="../css/style_log_in.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" 
     rel="stylesheet">
     </head>

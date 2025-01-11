@@ -3,18 +3,38 @@ function check_login($con)
 {
     if (isset($_SESSION['user_id'])) {
         $id = $_SESSION['user_id'];
-        $query = "select * from parents where user_id = '$id' limit 1";
+        $id = mysqli_real_escape_string($con, $id); // Escape the input to prevent SQL injection
 
+        // Check in the parents table
+        $query = "SELECT * FROM parents WHERE user_id = '$id' LIMIT 1";
         $result = mysqli_query($con, $query);
-        if ($result && mysqli_num_rows($result) > 0) {
-            $user_data = mysqli_fetch_assoc($result);
-            return $user_data;
+
+        if ($result && mysqli_num_rows($result) === 0) {
+            // If not found in parents, check in the babysitter table
+            $query = "SELECT * FROM babysitter WHERE user_id = '$id' LIMIT 1";
+            $result = mysqli_query($con, $query);
         }
 
-        header("Location: login.php");
-        die;
+        if ($result && mysqli_num_rows($result) > 0) {
+            return mysqli_fetch_assoc($result); // Return user data if found
+        } else {
+            // Redirect to login page if no user is found
+            header("Location: login_in_babysitter.php");
+            die;
+        }
     }
+
+    // Redirect to parent login if session is not set
+    header("Location: login_in_parent.php");
+    die;
 }
+
+
+
+    
+
+
+
 
 function random_num($length)
 {

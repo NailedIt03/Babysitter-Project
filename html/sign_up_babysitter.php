@@ -4,12 +4,8 @@
 session_start();
 include "connection.php";
 include "functions.php";
-$connection = mysqli_connect("localhost", "root", "", "login_babysitter");
 
-if (!$connection) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-echo "Connected successfully to database 'login_babysitter'.";
+
 
 if($_SERVER['REQUEST_METHOD'] == "POST")
 {
@@ -21,8 +17,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     $user_id = random_num(20);
     $query = "insert into babysitter (user_id,user_name,password) values('$user_id','$user_name','$password')";
 
-    mysqli_query($connection,$query);
 
+ mysqli_query(mysql: $con,query: $query);
     header("Location: log_in_babysitter.php");
     die;
 }else
@@ -38,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nestle - sign up (babysitter)</title>
-    <link rel="stylesheet" href="../css/style_sign_up_babysitter.css">
+    <link rel="stylesheet" href="../css/style_sign_up.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" 
     rel="stylesheet">
 </head>

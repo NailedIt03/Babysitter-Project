@@ -13,7 +13,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url(images/LEAVES.jpg); 
+    background-image: url("../images/leaves.jpg"); 
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat; 
