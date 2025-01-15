@@ -9,7 +9,6 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 $username = $_SESSION['username'];
 
-
 $query = "SELECT child FROM parents WHERE user_name = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("s", $username);
@@ -30,58 +29,91 @@ $childList = $children ? explode(',', $children) : [];
     <link rel="stylesheet" href="../css/hp_parent.css">
 </head>
 <body>
-    <div class="line"></div>
+    <div class="header">
+        <div class="top-left-logo"><img src="../images/LOGO.png" alt="Site Logo"></div>
+        <div class="nav">
+            <a href="#" class="nav-item">HOME</a>
+            <a href="#" class="nav-item">CALENDAR</a>
+            <a href="#" class="nav-item">NANNIES</a>
+            <form action="logout.php" method="post" class="logout-form">
+                <button type="submit" class="logout-button">LOG OUT</button>
+            </form>
+        </div>
+    </div>
     
-    <div class="pf_box">
-        <p><strong>Welcome, <?php echo htmlspecialchars($username); ?>!</strong></p>
+    <div class="content">
+        <div class="left-panel">
+            <div class="pf_box">
+                <p><strong><?php echo htmlspecialchars($username); ?></strong></p>
 
-        <?php
-        $query = "SELECT profile_pic FROM parents WHERE user_name = ?";
-        $stmt = $con->prepare($query);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $stmt->bind_result($profilePic);
-        $stmt->fetch();
+                <?php
+                $query = "SELECT profile_pic FROM parents WHERE user_name = ?";
+                $stmt = $con->prepare($query);
+                $stmt->bind_param("s", $username);
+                $stmt->execute();
+                $stmt->bind_result($profilePic);
+                $stmt->fetch();
 
-        if ($profilePic) {
-            echo '<img src="uploads/' . htmlspecialchars($profilePic) . '" alt="Profile Picture" style="width:100px;height:100px;border-radius:50%;">';
-        } else {
-            echo '<p>No profile picture uploaded yet.</p>';
-        }
-        $stmt->close();
-        ?>
-
-        <form action="upload_profile_pic.php" method="POST" enctype="multipart/form-data">
-            <label for="profile_pic">Upload Profile Picture:</label>
-            <input type="file" name="profile_pic" id="profile_pic" accept="image/*" required>
-            <button type="submit">Upload</button>
-        </form>
-    </div>
-
-    <div class="cm_box">
-        <h2>Children:</h2>
-        <ul>
-            <?php
-            if ($childList) {
-                foreach ($childList as $child) {
-                    echo "<li>" . htmlspecialchars(trim($child)) . "</li>";
+                if ($profilePic) {
+                    echo '<div class="profile-picture">
+                            <img src="uploads/' . htmlspecialchars($profilePic) . '" alt="Profile Picture">
+                          </div>';
+                } else {
+                    echo '<p>No profile picture uploaded yet.</p>';
                 }
-            } else {
-                echo "<p>No children added yet.</p>";
-            }
-            ?>
-        </ul>
-        
-        <h3>Add a Child</h3>
-        <form action="add_child.php" method="POST">
-            <label for="child_name">Child Name:</label>
-            <input type="text" id="child_name" name="child_name" required>
-            <button type="submit">Add Child</button>
-        </form>
-    </div>
+                $stmt->close();
+                ?>
 
-    <form action="logout.php" method="post" style="text-align: center; margin-top: 20px;">
-        <button type="submit" class="logout-button">Logout</button>
-    </form>
+                <form action="upload_profile_pic.php" method="POST" enctype="multipart/form-data" class="upload-form">
+                    <label for="profile_pic">Upload Profile Picture:</label>
+                    <input type="file" name="profile_pic" id="profile_pic" accept="image/*" required>
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+
+            <div class="children-box">
+                <h2>Children:</h2>
+                <ul>
+                    <?php
+                    if ($childList) {
+                        foreach ($childList as $child) {
+                            echo "<li>" . htmlspecialchars(trim($child)) . "</li>";
+                        }
+                    } else {
+                        echo "<li>No children added yet.</li>";
+                    }
+                    ?>
+                </ul>
+
+                <form action="add_child.php" method="POST" class="add-child-form">
+                    <input type="text" name="child_name" placeholder="Add a child..." required>
+                    <button type="submit">+ Add</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="nanny-updates">
+                <div class="update">
+                    <p><strong>papi</strong></p>
+                    <p>shiba me</p>
+                    <span>15:00</span>
+                    <a href="#">+reply</a>
+                </div>
+                <div class="update">
+                    <p><strong>Kvartalnata Kurvetina</strong></p>
+                    <p>lije mi putkatas</p>
+                    <span>14:30</span>
+                    <a href="#">+reply</a>
+                </div>
+                <div class="update">
+                    <p><strong>bavachka</strong></p>
+                    <p>sere</p>
+                    <span>13:55</span>
+                    <a href="#">+reply</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

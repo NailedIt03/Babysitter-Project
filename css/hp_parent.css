@@ -1,49 +1,150 @@
-.line {
-    width: 100%;
-    height: 120px; 
-    background-color: #FAC898; 
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000; 
-  }
-  .pf_box {
-    width: 500px; 
-    height: 700px; 
-    background-color: rgb(211, 225, 230); 
-    border-radius: 15%; 
-    display: inline-block; 
-    margin-top: 20px;
-    margin-left: 150px;
+
+body, ul, li, a {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
 }
-.cm_box {
-    width: 900px; 
-    height: 700px; 
-    background-color: rgb(211, 225, 230); 
-    border-radius: 10%; 
-    display: inline-block;
-    margin-top: 160px;
-    margin-left: 240px;
+
+body {
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: #e0e0e0;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    height: 50px;
+}
+
+.top-left-logo img {
+    height: 5rem;
+    width: auto; 
+    margin-top: 1rem;
+}
+
+
+
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item {
+    margin-right: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+.logout-form {
+    margin: 0;
 }
 
 .logout-button {
-    display: inline-block;
     background-color: #ff4d4d;
     color: white;
-    padding: 10px 20px;
-    text-decoration: none;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.content {
+    display: flex;
+    margin: 20px auto;
+    max-width: 1200px;
+    gap: 20px;
+}
+
+.left-panel, .right-panel {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.left-panel {
+    width: 35%;
+}
+
+.right-panel {
+    width: 60%;
+}
+
+.pf_box {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.pf_box img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.upload-form {
+    margin-top: 15px;
+}
+
+.children-box ul {
+    margin-top: 10px;
+}
+
+.children-box ul li {
+    margin-bottom: 8px;
+}
+
+.add-child-form {
+    margin-top: 15px;
+}
+
+.add-child-form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-child-form button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
+    margin-left: 5px;
     cursor: pointer;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
 }
 
-.logout-button:hover {
-    background-color: #cc0000;
+.nanny-updates {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-  
-  
+.update {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.update p {
+    margin: 0;
+}
+
+.update span {
+    font-size: 12px;
+    color: #888;
+}
+
+.update a {
+    color: #007bff;
+    font-size: 12px;
+}
