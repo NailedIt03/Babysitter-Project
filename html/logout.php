@@ -7,3 +7,4 @@ unset ($_SESSION['user_id']);
 
 header("Location: log_in_parent.php");
 die;
+?>

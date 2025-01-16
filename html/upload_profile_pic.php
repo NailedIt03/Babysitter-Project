@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_pic'])) {
     $uploadPath = $uploadDir . $fileName;
 
     if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-        // Check if the user already has a profile picture
+        
         $query = "SELECT profile_pic FROM parents WHERE user_name = ?";
         $stmt = $con->prepare($query);
         $stmt->bind_param("s", $username);

@@ -32,8 +32,8 @@ $childList = $children ? explode(',', $children) : [];
     <div class="header">
         <div class="top-left-logo"><img src="../images/LOGO.png" alt="Site Logo"></div>
         <div class="nav">
-            <a href="#" class="nav-item">HOME</a>
-            <a href="#" class="nav-item">CALENDAR</a>
+            <a href="hp_parent.php" class="nav-item">HOME</a>
+            <a href="calendar_parent.php" class="nav-item">CALENDAR</a>
             <a href="#" class="nav-item">NANNIES</a>
             <form action="logout.php" method="post" class="logout-form">
                 <button type="submit" class="logout-button">LOG OUT</button>
@@ -95,20 +95,20 @@ $childList = $children ? explode(',', $children) : [];
         <div class="right-panel">
             <div class="nanny-updates">
                 <div class="update">
-                    <p><strong>papi</strong></p>
-                    <p>shiba me</p>
+                    <p><strong>Nanny Ema</strong></p>
+                    <p>Chrisopher was put to sleep</p>
                     <span>15:00</span>
                     <a href="#">+reply</a>
                 </div>
                 <div class="update">
-                    <p><strong>Kvartalnata Kurvetina</strong></p>
-                    <p>lije mi putkatas</p>
+                    <p><strong>Nanny Ema</strong></p>
+                    <p>Stephanie ate lunch</p>
                     <span>14:30</span>
                     <a href="#">+reply</a>
                 </div>
                 <div class="update">
-                    <p><strong>bavachka</strong></p>
-                    <p>sere</p>
+                    <p><strong>Nanny Ema</strong></p>
+                    <p>Both of them came back from school</p>
                     <span>13:55</span>
                     <a href="#">+reply</a>
                 </div>

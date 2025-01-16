@@ -10,7 +10,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 
     if(!empty($user_name) && !empty($password) && !is_numeric($user_name))
 {
-    //read from database
+    
     $query = "select * from parents where user_name = '$user_name' limit 1";
     $result = mysqli_query($con, $query);
 
@@ -49,12 +49,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     rel="stylesheet">
     </head>
     <body>
-<div id="box">
+    <div class="teal-rectangle">
+    <h1 class="login-heading">Log in</h1>
  <form method="post">
+    <h2>Username</h2>
  <input id="text" type="text" name="user_name"><br><br>
+ <h2>Password</h2>
 <input id="text" type="password" name="password"><br><br>
-
-<input id="button" type="submit" value="Login"><br><br>
+<input class="button-login" type="submit" value="Login"><br><br>
 
 <a href="sign_up_parent.php">Click to Sign Up</a><br><br>
  </form>

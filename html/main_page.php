@@ -15,9 +15,9 @@ include("functions.php");
 </head>
 <body>
     <nav class="navbar">
-        <a href="#" class="nav-link">Sign up (parent)</a>
-        <a href="#" class="nav-link">Sign up (babysitter)</a>
-        <a href="#" class="nav-link">Log in</a>
+        <a href="sign_up_parent.php" class="nav-link">Sign up (parent)</a>
+        <a href="sign_up_babysitter.php" class="nav-link">Sign up (babysitter)</a>
+        <a href="log_in_parent.php" class="nav-link">Log in</a>
     </nav>
     <p class="tagline">Find the best babysitter service using Nestle</p>
     <img src="../images/LOGO.png" alt="Site Logo" class="top-left-logo">
