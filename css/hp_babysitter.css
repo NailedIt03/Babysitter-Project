@@ -12,68 +12,20 @@ body {
     flex-direction: column;
 }
 
-.header {
-    background-color: #e0e0e0;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-    height: 50px;
-}
-
-.top-left-logo img {
-    height: 5rem;
-    width: auto;
-    margin-top: 1rem;
-}
-
-.nav {
-    display: flex;
-    align-items: center;
-}
-
-.nav-item {
-    margin-right: 20px;
-    font-size: 16px;
-    color: #333;
-}
-
-.logout-form {
-    margin: 0;
-}
-
-.logout-button {
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-}
-
-.logout-button:hover {
-    background-color: #e04040;
-}
-
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #d6d6d6;
-    padding: 5px 10px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
+    padding: 15px 30px;
 }
 
 .logo img {
-    height: 5rem;
-    width: auto;
+    position: absolute;
+    top: -18px;
+    left: 10px;
+    width: 125px;
+    height: auto;
 }
 
 .nav-links a {
@@ -81,40 +33,113 @@ body {
     text-decoration: none;
     color: black;
     font-weight: 500;
-    font-size: 14px; 
+    font-size: 16px;
 }
 
-.logout {
-    font-weight: bold;
-}
-
-.container {
-    margin: 30px auto;
-    width: 80%;
-}
-
-.request-card {
+.dashboard {
     display: flex;
-    background: #d1d1d1;
-    padding: 20px;
-    border-radius: 20px;
-    margin-bottom: 20px;
+    margin: 30px auto;
+    width: 90%;
+    gap: 40px;
+}
+
+.profile-section {
+    flex: 1;
+    background: #e0e0e0;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
 .profile-pic {
-    width: 80px;
-    height: 80px;
-    background-color: #e57373;
+    width: 100px;
+    height: 100px;
+    background-color: #a07c7c;
     border-radius: 50%;
-    margin-right: 20px;
+    margin-bottom: 10px;
 }
 
-.request-content {
-    flex: 1;
+.profile-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
-.request-content p {
-    margin: 10px 0;
+.caretaker-info {
     font-size: 14px;
+    color: #333;
+    text-align: center;
+    width: 90%;
+}
+
+.customer-list-btn {
+    background: #ccc;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    width: 80%;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.activity-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.activity-update {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ddd;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.activity-update textarea {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+}
+
+.activity-update button {
+    background: none;
+    border: none;
+    color: black;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.activity-log {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.log-item {
+    display: flex;
+    justify-content: space-between;
+    background: #d6d6d6;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.log-item p {
+    font-size: 14px;
+    color: black;
+}
+
+.log-item span {
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
 }
