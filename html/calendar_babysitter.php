@@ -3,7 +3,7 @@ session_start();
 include "connection.php";
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header(header: "Location: log_in_parent.php");
+    header("Location: log_in_babysitter.php");
     exit();
 }
 
@@ -11,7 +11,7 @@ $username = $_SESSION['username'];
 
 $query = "SELECT id, child FROM parents WHERE user_name = ?";
 $stmt = $con->prepare($query);
-$stmt->bind_param("s", $username);
+$stmt->bind_param("s", $username); 
 $stmt->execute();
 $stmt->bind_result($parentId, $children);
 $stmt->fetch();
@@ -24,11 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $eventDate = $_POST['event_date'];
     $eventDescription = $_POST['event_description'];
     $eventTime = $_POST['event_time'];
-
     if (!empty($childName) && !empty($eventDate) && !empty($eventDescription) && !empty($eventTime)) {
         $query = "INSERT INTO events (parent_id, child_name, event_date, event_description, event_time) VALUES (?, ?, ?, ?, ?)";
         $stmt = $con->prepare($query);
-        $stmt->bind_param("issss", $parentId, $childName, $eventDate, $eventDescription, $eventTime);
+        $stmt->bind_param("issss", $parentId, $childName, $eventDate, $eventDescription, $eventTime); 
 
         if ($stmt->execute()) {
             $message = "Event added successfully!";
@@ -42,33 +41,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar Parent</title>
-    <link rel="stylesheet" href="../css/calendar_parent.css">
+    <title>Calendar Babysitter</title>
+    <link rel="stylesheet" href="../css/calendar_babysitter.css">
 </head>
 <body>
     <div class="header">
         <div class="top-left-logo"><img src="../images/LOGO.png" alt="Site Logo"></div>
         <div class="nav">
-            <a href="hp_parent.php" class="nav-item">HOME</a>
-            <a href="calendar_parent.php" class="nav-item">CALENDAR</a>
-            <a href="#" class="nav-item">NANNIES</a>
+            <a href="hp_babysitter.php" class="nav-item">HOME</a>
+            <a href="calendar_babysitter.php" class="nav-item">CALENDAR</a>
+            <a href="#" class="nav-item">PARENTS</a>
             <form action="logout.php" method="post" class="logout-form">
                 <button type="submit" class="logout-button">LOG OUT</button>
             </form>
         </div>
     </div>
-   
 
     <div class="content">
         <h1>Assign Event to a Child</h1>
         <?php if (isset($message)) echo "<p>$message</p>"; ?>
 
-        <form action="calendar_parent.php" method="POST">
+        <form action="calendar_babysitter.php" method="POST">
             <label for="child_name">Select Child:</label>
             <select name="child_name" id="child_name" required>
                 <option value="" disabled selected>Select a child</option>
@@ -106,11 +105,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <?php
             $query = "SELECT child_name, event_date, event_time, event_description FROM events WHERE parent_id = ?";
             $stmt = $con->prepare($query);
-            $stmt->bind_param("i", $parentId);
+            $stmt->bind_param("i", $parentId); 
             $stmt->execute();
             $stmt->bind_result($childName, $eventDate, $eventTime, $eventDescription);
 
-            while ($stmt->fetch()): ?>
+            while ($stmt->fetch()):
+            ?>
                 <tr>
                     <td><?php echo htmlspecialchars($childName); ?></td>
                     <td><?php echo htmlspecialchars($eventDate); ?></td>
