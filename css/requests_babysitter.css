@@ -1,20 +1,25 @@
+/* General Styling */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
 }
 
+/* Header */
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #d3d3d3;
     padding: 15px 40px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .top-left-logo img {
-    height: 40px; 
+    height: 5rem;
+    width: auto; 
+    margin-top: 1rem;
 }
 
 .nav {
@@ -30,10 +35,7 @@ body {
     font-size: 16px;
 }
 
-.nav a.active {
-    text-decoration: underline;
-}
-
+/* Logout Button */
 .logout-button {
     background-color: #e74c3c; 
     color: white;
@@ -42,53 +44,128 @@ body {
     border-radius: 20px;
     font-weight: bold;
     cursor: pointer;
+    transition: background 0.3s ease;
 }
 
 .logout-button:hover {
     background-color: #c0392b;
 }
 
-.container {
-    max-width: 90%;
+/* Main Container */
+.requests-list {
+    max-width: 80%;
     margin: 20px auto;
     background: white;
     padding: 20px;
     border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.request-card {
+/* Request Box */
+.request-container {
     display: flex;
     align-items: center;
     background: #e0e0e0;
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
 }
 
+.request-container:hover {
+    transform: scale(1.02);
+}
+
+/* Parent Profile Picture */
 .profile-pic {
     width: 60px;
     height: 60px;
-    background-color: #e57373; 
     border-radius: 50%;
     margin-right: 15px;
+    object-fit: cover;
+    border: 2px solid #ccc;
 }
 
-.request-content {
-    flex-grow: 1;
+/* Request Details */
+.request-details {
+    flex: 1;
 }
 
-.request-content strong {
+.request-details strong {
     display: block;
     font-size: 16px;
+    color: #333;
 }
 
-.request-content p {
+.request-details p {
     font-size: 14px;
-    color: #333;
+    color: #555;
     margin: 5px 0;
 }
 
-.request-content small {
-    font-size: 12px;
-    color: #555;
+/* Action Buttons */
+.request-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.request-actions button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: bold;
+}
+
+/* Accept Button */
+.accept-btn {
+    background: #4CAF50;
+    color: white;
+}
+
+.accept-btn:hover {
+    background: #45a049;
+}
+
+/* Reject Button */
+.reject-btn {
+    background: #FF4D4D;
+    color: white;
+}
+
+.reject-btn:hover {
+    background: #E04040;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        padding: 10px 20px;
+    }
+    
+    .nav {
+        gap: 15px;
+    }
+
+    .requests-list {
+        max-width: 95%;
+    }
+
+    .request-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-pic {
+        width: 50px;
+        height: 50px;
+    }
+
+    .request-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
 }

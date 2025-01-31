@@ -34,7 +34,7 @@ $childList = $children ? explode(',', $children) : [];
         <div class="nav">
             <a href="hp_parent.php" class="nav-item">HOME</a>
             <a href="calendar_parent.php" class="nav-item">CALENDAR</a>
-            <a href="#" class="nav-item">NANNIES</a>
+            <a href="nannies.php" class="nav-item">NANNIES</a>
             <form action="logout.php" method="post" class="logout-form">
                 <button type="submit" class="logout-button">LOG OUT</button>
             </form>

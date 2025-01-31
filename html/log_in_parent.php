@@ -24,6 +24,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             {
                 $_SESSION['logged_in'] = true;
                 $_SESSION['user_id'] = $user_data['user_id'];
+                $_SESSION['parent_id'] = $user_data['id']; 
                 $_SESSION['username'] = $user_data['user_name'];
                 header("Location: hp_parent.php");
                 die;}

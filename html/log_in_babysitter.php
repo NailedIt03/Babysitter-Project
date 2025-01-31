@@ -26,6 +26,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
                 $_SESSION['logged_in'] = true;
                 $_SESSION['user_id'] = $user_data['user_id'];
                 $_SESSION['username'] = $user_data['user_name'];
+                $_SESSION['babysitter_id'] = $user_data['id'];
                 header("Location: hp_babysitter.php");
                 die;}
         }
@@ -46,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nestle - log in (parent)</title>
-    <link rel="stylesheet" href="../css/requests_babysitter_css">
+    <link rel="stylesheet" href="../css/style_log_in.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" 
     rel="stylesheet">
     </head>

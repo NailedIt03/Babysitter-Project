@@ -1,64 +1,180 @@
-/* Homepage CSS */
-
-body {
-    font-family: Arial, sans-serif;
+body, ul, li, a {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-}
-
-/* Navbar */
-.navbar {
-    background-color: #2C3E50;
-    height: 60px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.navbar a {
-    color: white;
+    list-style: none;
     text-decoration: none;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.pf_box img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.nav-links a {
     margin: 0 15px;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.dashboard {
+    display: flex;
+    margin: 30px auto;
+    width: 90%;
+    gap: 40px;
+}
+
+.profile-section {
+    flex: 1;
+    background: #e0e0e0;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    background-color: #a07c7c;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-section h3 {
     font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.caretaker-info {
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    width: 90%;
+}
+
+.customer-list-btn {
+    background: #ccc;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    width: 80%;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.activity-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.activity-update {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ddd;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.activity-update textarea {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+}
+
+.activity-update button {
+    background: none;
+    border: none;
+    color: black;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.activity-log {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.log-item {
+    display: flex;
+    justify-content: space-between;
+    background: #d6d6d6;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.log-item p {
+    font-size: 14px;
+    color: black;
+}
+
+.log-item span {
+    font-size: 14px;
+    color: black;
     font-weight: bold;
 }
-
-.navbar a:hover {
-    text-decoration: underline;
+.header {
+    background-color: #e0e0e0;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    height: 50px;
 }
 
-/* Homepage Content */
-.container {
-    max-width: 900px;
-    margin: 20px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.top-left-logo img {
+    height: 5rem;
+    width: auto; 
+    margin-top: 1rem;
 }
 
-h1 {
-    text-align: center;
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item {
+    margin-right: 20px;
+    font-size: 16px;
     color: #333;
 }
 
-.feature {
-    background: white;
-    padding: 20px;
-    margin-bottom: 15px;
-    border-left: 5px solid #2C3E50;
-    border-radius: 5px;
-}
-
-.feature h2 {
+.logout-form {
     margin: 0;
-    color: #2C3E50;
 }
 
-.feature p {
-    margin-top: 5px;
-    color: #555;
+.logout-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #e04040;
 }
