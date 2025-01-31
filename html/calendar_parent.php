@@ -3,12 +3,13 @@ session_start();
 include "connection.php";
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header(header: "Location: log_in_parent.php");
+    header("Location: log_in_parent.php");
     exit();
 }
 
 $username = $_SESSION['username'];
 
+// Fetch parent's children
 $query = "SELECT id, child FROM parents WHERE user_name = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("s", $username);
@@ -19,6 +20,7 @@ $stmt->close();
 
 $childrenList = explode(",", $children);
 
+// Handle event creation
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $childName = $_POST['child_name'];
     $eventDate = $_POST['event_date'];
@@ -63,10 +65,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
     </div>
    
-
     <div class="content">
         <h1>Assign Event to a Child</h1>
-        <?php if (isset($message)) echo "<p>$message</p>"; ?>
+        <?php if (isset($message)) echo "<p class='message'>$message</p>"; ?>
 
         <form action="calendar_parent.php" method="POST">
             <label for="child_name">Select Child:</label>
@@ -96,26 +97,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </form>
 
         <h2>Your Scheduled Events</h2>
-        <table border="1">
+        <table>
             <tr>
                 <th>Child Name</th>
                 <th>Event Date</th>
                 <th>Event Time</th>
                 <th>Event Description</th>
+                <th>Status</th>
             </tr>
             <?php
-            $query = "SELECT child_name, event_date, event_time, event_description FROM events WHERE parent_id = ?";
+            $query = "SELECT id, child_name, event_date, event_time, event_description, status FROM events WHERE parent_id = ?";
             $stmt = $con->prepare($query);
             $stmt->bind_param("i", $parentId);
             $stmt->execute();
-            $stmt->bind_result($childName, $eventDate, $eventTime, $eventDescription);
+            $stmt->bind_result($eventId, $childName, $eventDate, $eventTime, $eventDescription, $status);
 
-            while ($stmt->fetch()): ?>
-                <tr>
+            while ($stmt->fetch()):
+                $rowClass = ($status === 'completed') ? "completed-task" : "";
+                $statusText = ($status === 'completed') ? "✅ Completed" : "Pending";
+            ?>
+                <tr class="<?= $rowClass ?>">
                     <td><?php echo htmlspecialchars($childName); ?></td>
                     <td><?php echo htmlspecialchars($eventDate); ?></td>
                     <td><?php echo htmlspecialchars($eventTime); ?></td>
                     <td><?php echo htmlspecialchars($eventDescription); ?></td>
+                    <td><?php echo $statusText; ?></td>
                 </tr>
             <?php endwhile;
             $stmt->close();

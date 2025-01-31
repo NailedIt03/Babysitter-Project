@@ -1,45 +1,68 @@
 <?php
 session_start();
 include "connection.php";
+include "functions.php";
 
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header(header: "Location: log_in_babysitter.php");
-    exit();
+// Ensure the babysitter is logged in
+if (!isset($_SESSION['babysitter_id'])) {
+    die("Unauthorized access.");
 }
 
-$username = $_SESSION['username'];
+$babysitter_id = $_SESSION['babysitter_id'];
 
-$query = "SELECT id, child FROM parents WHERE user_name = ?";
-$stmt = $con->prepare($query);
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$stmt->bind_result($parentId, $children);
-$stmt->fetch();
-$stmt->close();
+// Fetch parent IDs where request is accepted
+$parent_query = $con->prepare("
+    SELECT DISTINCT parent_id 
+    FROM babysitter_requests 
+    WHERE babysitter_id = ? AND status = 'accepted'
+");
+$parent_query->bind_param("i", $babysitter_id);
+$parent_query->execute();
+$parent_result = $parent_query->get_result();
 
-$childrenList = explode(",", $children);
+$parent_ids = [];
+while ($row = $parent_result->fetch_assoc()) {
+    $parent_ids[] = $row['parent_id'];
+}
+$parent_query->close();
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $childName = $_POST['child_name'];
-    $eventDate = $_POST['event_date'];
-    $eventDescription = $_POST['event_description'];
-    $eventTime = $_POST['event_time'];
-    if (!empty($childName) && !empty($eventDate) && !empty($eventDescription) && !empty($eventTime)) {
-        $query = "INSERT INTO events (parent_id, child_name, event_date, event_description, event_time) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $con->prepare($query);
-        $stmt->bind_param("issss", $parentId, $childName, $eventDate, $eventDescription, $eventTime); 
+// If no accepted parents, show a message
+if (empty($parent_ids)) {
+    $events_result = false;
+} else {
+    // Fetch events for accepted parents only
+    $parent_ids_placeholder = implode(",", array_fill(0, count($parent_ids), "?"));
+    $types = str_repeat("i", count($parent_ids));
 
-        if ($stmt->execute()) {
-            $message = "Event added successfully!";
-        } else {
-            $message = "Failed to add event.";
-        }
+    $query = "
+        SELECT e.id, e.child_name, e.event_date, e.event_time, e.event_description, e.status, p.user_name AS parent_name
+        FROM events e
+        JOIN parents p ON e.parent_id = p.id
+        WHERE e.parent_id IN ($parent_ids_placeholder)
+    ";
 
-        $stmt->close();
+    $stmt = $con->prepare($query);
+    $stmt->bind_param($types, ...$parent_ids);
+    $stmt->execute();
+    $events_result = $stmt->get_result();
+}
+
+// Handle task updates
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['event_id'], $_POST['status'])) {
+    $event_id = $_POST['event_id'];
+    $status = $_POST['status'];
+
+    $update_query = $con->prepare("UPDATE events SET status = ? WHERE id = ?");
+    $update_query->bind_param("si", $status, $event_id);
+    if ($update_query->execute()) {
+        $message = "Task updated successfully!";
     } else {
-        $message = "All fields are required.";
+        $message = "Failed to update task.";
     }
+    $update_query->close();
+    header("Refresh:0"); // Refresh page to show updates
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar Babysitter</title>
+    <title>Babysitter Calendar</title>
     <link rel="stylesheet" href="../css/calendar_babysitter.css">
 </head>
 <body>
@@ -64,63 +87,44 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 
     <div class="content">
-        <h1>Assign Event to a Child</h1>
-        <?php if (isset($message)) echo "<p>$message</p>"; ?>
+        <h1>Assigned Tasks</h1>
+        <?php if (isset($message)) echo "<p class='message'>$message</p>"; ?>
 
-        <form action="calendar_babysitter.php" method="POST">
-            <label for="child_name">Select Child:</label>
-            <select name="child_name" id="child_name" required>
-                <option value="" disabled selected>Select a child</option>
-                <?php foreach ($childrenList as $child): ?>
-                    <option value="<?php echo htmlspecialchars(trim($child)); ?>">
-                        <?php echo htmlspecialchars(trim($child)); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <br><br>
-
-            <label for="event_date">Event Date:</label>
-            <input type="date" name="event_date" id="event_date" required>
-            <br><br>
-
-            <label for="event_time">Event Time:</label>
-            <input type="time" name="event_time" id="event_time" required>
-            <br><br>
-
-            <label for="event_description">Event Description:</label>
-            <textarea name="event_description" id="event_description" rows="4" cols="50" required></textarea>
-            <br><br>
-
-            <button type="submit">Add Event</button>
-        </form>
-
-        <h2>Your Scheduled Events</h2>
-        <table border="1">
+        <?php if ($events_result && $events_result->num_rows > 0): ?>
+        <table>
             <tr>
                 <th>Child Name</th>
                 <th>Event Date</th>
                 <th>Event Time</th>
                 <th>Event Description</th>
+                <th>Parent</th>
+                <th>Status</th>
+                <th>Action</th>
             </tr>
-            <?php
-            $query = "SELECT child_name, event_date, event_time, event_description FROM events WHERE parent_id = ?";
-            $stmt = $con->prepare($query);
-            $stmt->bind_param("i", $parentId); 
-            $stmt->execute();
-            $stmt->bind_result($childName, $eventDate, $eventTime, $eventDescription);
-
-            while ($stmt->fetch()):
-            ?>
+            <?php while ($row = $events_result->fetch_assoc()): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($childName); ?></td>
-                    <td><?php echo htmlspecialchars($eventDate); ?></td>
-                    <td><?php echo htmlspecialchars($eventTime); ?></td>
-                    <td><?php echo htmlspecialchars($eventDescription); ?></td>
+                    <td><?php echo htmlspecialchars($row['child_name']); ?></td>
+                    <td><?php echo htmlspecialchars($row['event_date']); ?></td>
+                    <td><?php echo htmlspecialchars($row['event_time']); ?></td>
+                    <td><?php echo htmlspecialchars($row['event_description']); ?></td>
+                    <td><?php echo htmlspecialchars($row['parent_name']); ?></td>
+                    <td><?php echo htmlspecialchars(ucfirst($row['status'])); ?></td>
+                    <td>
+                        <form method="POST">
+                            <input type="hidden" name="event_id" value="<?= $row['id'] ?>">
+                            <select name="status">
+                                <option value="pending" <?= ($row['status'] === 'pending') ? 'selected' : ''; ?>>Pending</option>
+                                <option value="completed" <?= ($row['status'] === 'completed') ? 'selected' : ''; ?>>Completed</option>
+                            </select>
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
                 </tr>
-            <?php endwhile;
-            $stmt->close();
-            ?>
+            <?php endwhile; ?>
         </table>
+        <?php else: ?>
+            <p>No events assigned from accepted parents.</p>
+        <?php endif; ?>
     </div>
 </body>
 </html>

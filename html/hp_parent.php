@@ -2,6 +2,7 @@
 session_start();
 include "connection.php";
 
+// Ensure the parent is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: log_in_parent.php");
     exit();
@@ -9,15 +10,38 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 $username = $_SESSION['username'];
 
-$query = "SELECT child FROM parents WHERE user_name = ?";
+// Fetch parent's children
+$query = "SELECT id, child FROM parents WHERE user_name = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("s", $username);
 $stmt->execute();
-$stmt->bind_result($children);
+$stmt->bind_result($parentId, $children);
 $stmt->fetch();
 $stmt->close();
 
 $childList = $children ? explode(',', $children) : [];
+
+// Fetch babysitter updates for this parent
+$updates_query = $con->prepare("
+    SELECT bu.child_name, bu.update_text, bu.update_time, b.user_name AS babysitter_name
+    FROM babysitter_updates bu
+    JOIN babysitter b ON bu.babysitter_id = b.id
+    WHERE bu.parent_id = ?
+    ORDER BY bu.update_time DESC
+");
+$updates_query->bind_param("i", $parentId);
+$updates_query->execute();
+$updates_result = $updates_query->get_result();
+$updates_query->close();
+
+// Fetch parent profile picture
+$query = "SELECT profile_pic FROM parents WHERE user_name = ?";
+$stmt = $con->prepare($query);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$stmt->bind_result($profilePic);
+$stmt->fetch();
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -45,25 +69,9 @@ $childList = $children ? explode(',', $children) : [];
         <div class="left-panel">
             <div class="pf_box">
                 <p><strong><?php echo htmlspecialchars($username); ?></strong></p>
-
-                <?php
-                $query = "SELECT profile_pic FROM parents WHERE user_name = ?";
-                $stmt = $con->prepare($query);
-                $stmt->bind_param("s", $username);
-                $stmt->execute();
-                $stmt->bind_result($profilePic);
-                $stmt->fetch();
-
-                if ($profilePic) {
-                    echo '<div class="profile-picture">
-                            <img src="uploads/' . htmlspecialchars($profilePic) . '" alt="Profile Picture">
-                          </div>';
-                } else {
-                    echo '<p>No profile picture uploaded yet.</p>';
-                }
-                $stmt->close();
-                ?>
-
+                <div class="profile-picture">
+                    <img src="uploads/<?php echo htmlspecialchars($profilePic ?? 'default.png'); ?>" alt="Profile Picture">
+                </div>
                 <form action="upload_profile_pic.php" method="POST" enctype="multipart/form-data" class="upload-form">
                     <label for="profile_pic">Upload Profile Picture:</label>
                     <input type="file" name="profile_pic" id="profile_pic" accept="image/*" required>
@@ -93,26 +101,20 @@ $childList = $children ? explode(',', $children) : [];
         </div>
 
         <div class="right-panel">
-            <div class="nanny-updates">
-                <div class="update">
-                    <p><strong>Nanny Ema</strong></p>
-                    <p>Chrisopher was put to sleep</p>
-                    <span>15:00</span>
-                    <a href="#">+reply</a>
+            <h2>Babysitter Updates</h2>
+            <?php if ($updates_result->num_rows > 0): ?>
+                <div class="nanny-updates">
+                    <?php while ($row = $updates_result->fetch_assoc()) { ?>
+                        <div class="update">
+                            <p><strong>Nanny <?= htmlspecialchars($row['babysitter_name']) ?></strong> (for <?= htmlspecialchars($row['child_name']) ?>)</p>
+                            <p><?= htmlspecialchars($row['update_text']) ?></p>
+                            <span><?= $row['update_time'] ?></span>
+                        </div>
+                    <?php } ?>
                 </div>
-                <div class="update">
-                    <p><strong>Nanny Ema</strong></p>
-                    <p>Stephanie ate lunch</p>
-                    <span>14:30</span>
-                    <a href="#">+reply</a>
-                </div>
-                <div class="update">
-                    <p><strong>Nanny Ema</strong></p>
-                    <p>Both of them came back from school</p>
-                    <span>13:55</span>
-                    <a href="#">+reply</a>
-                </div>
-            </div>
+            <?php else: ?>
+                <p>No updates from the babysitter yet.</p>
+            <?php endif; ?>
         </div>
     </div>
 </body>
