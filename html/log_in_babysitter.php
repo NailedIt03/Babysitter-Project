@@ -46,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nestle - log in (parent)</title>
-    <link rel="stylesheet" href="../css/style_log_in.css">
+    <link rel="stylesheet" href="../css/requests_babysitter_css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" 
     rel="stylesheet">
     </head>
@@ -60,7 +60,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 <input id="text" type="password" name="password"><br><br>
 <input class="button-login" type="submit" value="Login"><br><br>
 
-<a href="sign_up_parent.php">Click to Sign Up</a><br><br>
+<a href="sign_up_babysitter.php">Click to Sign Up</a><br><br>
  </form>
 </div>
     </body>

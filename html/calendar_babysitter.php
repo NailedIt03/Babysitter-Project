@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="nav">
             <a href="hp_babysitter.php" class="nav-item">HOME</a>
             <a href="calendar_babysitter.php" class="nav-item">CALENDAR</a>
-            <a href="#" class="nav-item">PARENTS</a>
+            <a href="requests_babysitter.php" class="nav-item">REQUESTS</a>
             <form action="logout.php" method="post" class="logout-form">
                 <button type="submit" class="logout-button">LOG OUT</button>
             </form>

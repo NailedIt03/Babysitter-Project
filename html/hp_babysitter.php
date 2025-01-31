@@ -8,8 +8,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 }
 
 $username = $_SESSION['username'];
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,41 +22,41 @@ $username = $_SESSION['username'];
 
     <div class="navbar">
         <div class="logo">
-            <img src="../images/LOGO.png">
+            <img src="../images/LOGO.png" alt="Logo">
         </div>
         <div class="nav-links">
-            <a href="#">HOME</a>
+            <a href="hp_babysitter.php">HOME</a>
             <a href="calendar_babysitter.php">CALENDAR</a>
-            <a href="#">REQUESTS</a>
-            <a href="#" class="logout">LOG OUT</a>
+            <a href="requests_babysitter.php">REQUESTS</a>
+            <a href="logout.php" class="logout">LOG OUT</a>
         </div>
     </div>
 
     <div class="dashboard">
+        
         <div class="profile-section">
             <div class="profile-pic"></div>
-            <h3>NANNY NAME</h3>
-            <p class="caretaker-info">• currently taking care of KID1NAME and KID2NAME for PARENT NAME</p>
+            <h3><?php echo strtoupper($username); ?></h3>
+            <p class="caretaker-info">• Currently taking care of KID1NAME and KID2NAME for PARENT NAME</p>
             <button class="customer-list-btn">Pick a customer list</button>
         </div>
 
-        <!-- Activity Section -->
         <div class="activity-section">
             <div class="activity-update">
-                <textarea placeholder="post and update..."></textarea>
-                <button>done</button>
+                <textarea placeholder="Post an update..."></textarea>
+                <button>Done</button>
             </div>
             <div class="activity-log">
                 <div class="log-item">
-                    <p><strong>NANNY NAME</strong><br>KID1NAME was put to sleep</p>
+                    <p><strong><?php echo strtoupper($username); ?></strong><br>KID1NAME was put to sleep</p>
                     <span>15:00</span>
                 </div>
                 <div class="log-item">
-                    <p><strong>NANNY NAME</strong><br>KID2NAME just ate his vegetables</p>
+                    <p><strong><?php echo strtoupper($username); ?></strong><br>KID2NAME just ate their vegetables</p>
                     <span>14:30</span>
                 </div>
                 <div class="log-item">
-                    <p><strong>NANNY NAME</strong><br>KID2NAME and KID1NAME came back from school</p>
+                    <p><strong><?php echo strtoupper($username); ?></strong><br>KID2NAME and KID1NAME came back from school</p>
                     <span>13:55</span>
                 </div>
             </div>
