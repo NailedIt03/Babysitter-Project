@@ -178,3 +178,67 @@ body {
 .logout-button:hover {
     background-color: #e04040;
 }
+select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.3s ease-in-out;
+    background: white;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+select:focus {
+    border-color: #3498db;
+    box-shadow: 2px 4px 10px rgba(52, 152, 219, 0.2);
+}
+
+/* Post Update Button */
+button:not(.logout-button)[type="submit"] {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+}
+
+button:not(.logout-button)[type="submit"]:hover {
+    background: linear-gradient(135deg, #2980b9, #21618c);
+    transform: translateY(-2px);}
+
+    .upload-form button {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        color: white;
+    }
+    
+    .upload-form button:hover {
+        background: linear-gradient(135deg, #27ae60, #229954);
+        transform: translateY(-2px);
+    }
+    button{
+        font-size: 16px;
+        font-weight: bold;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        outline: none;
+        display: inline-block;
+        text-align: center;
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .upload-label {
+    background: linear-gradient(135deg, #ff9800, #e67e22);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-block;
+    transition: background 0.3s ease-in-out, transform 0.2s ease;
+}
+
+.upload-label:hover {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+    transform: translateY(-2px);
+}

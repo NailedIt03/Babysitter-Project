@@ -2,7 +2,7 @@
 session_start();
 include "connection.php";
 
-// Ensure the parent is logged in
+
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: log_in_parent.php");
     exit();
@@ -10,7 +10,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 $username = $_SESSION['username'];
 
-// Fetch parent's children
+
 $query = "SELECT id, child FROM parents WHERE user_name = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("s", $username);
@@ -21,7 +21,7 @@ $stmt->close();
 
 $childList = $children ? explode(',', $children) : [];
 
-// Fetch babysitter updates for this parent
+
 $updates_query = $con->prepare("
     SELECT bu.child_name, bu.update_text, bu.update_time, b.user_name AS babysitter_name
     FROM babysitter_updates bu
@@ -73,10 +73,11 @@ $stmt->close();
                     <img src="uploads/<?php echo htmlspecialchars($profilePic ?? 'default.png'); ?>" alt="Profile Picture">
                 </div>
                 <form action="upload_profile_pic.php" method="POST" enctype="multipart/form-data" class="upload-form">
-                    <label for="profile_pic">Upload Profile Picture:</label>
-                    <input type="file" name="profile_pic" id="profile_pic" accept="image/*" required>
-                    <button type="submit">Upload</button>
-                </form>
+    <label for="profile_pic" class="upload-label">Choose a File</label>
+    <input type="file" name="profile_pic" id="profile_pic" accept="image/*" required>
+    <button type="submit">Upload</button>
+</form>
+
             </div>
 
             <div class="children-box">

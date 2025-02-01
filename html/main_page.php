@@ -14,11 +14,26 @@ include("functions.php");
     rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-        <a href="sign_up_parent.php" class="nav-link">Sign up (parent)</a>
-        <a href="sign_up_babysitter.php" class="nav-link">Sign up (babysitter)</a>
-        <a href="log_in_parent.php" class="nav-link">Log in</a>
+<nav class="navbar">
+        
+        <div class="dropdown">
+            <button class="dropdown-btn">Sign Up</button>
+            <div class="dropdown-content">
+                <a href="sign_up_parent.php">Parent</a>
+                <a href="sign_up_babysitter.php">Babysitter</a>
+            </div>
+        </div>
+
+        
+        <div class="dropdown">
+            <button class="dropdown-btn">Log In</button>
+            <div class="dropdown-content">
+                <a href="log_in_parent.php">Parent</a>
+                <a href="log_in_babysitter.php">Babysitter</a>
+            </div>
+        </div>
     </nav>
+
     <p class="tagline">Find the best babysitter service using Nestle</p>
     <img src="../images/LOGO.png" alt="Site Logo" class="top-left-logo">
     <div class="circle"></div>

@@ -88,3 +88,53 @@
             text-align: center;
             margin: 20px 0;
         }
+        
+        
+button {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    outline: none;
+}
+
+
+button:not(.pending, .accepted, .rejected, .logout-button) {
+    background-color: #3498db;
+    color: white;
+}
+
+button:not(.pending, .accepted, .rejected):hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+
+button.pending {
+    background-color: #f39c12;
+    color: white;
+    cursor: not-allowed;
+}
+
+
+button.accepted {
+    background-color: #2ecc71;
+    color: white;
+    cursor: not-allowed;
+}
+
+
+button.rejected {
+    background-color: #e74c3c;
+    color: white;
+    cursor: not-allowed;
+}
+
+
+button:active {
+    transform: scale(0.95);
+}
+
