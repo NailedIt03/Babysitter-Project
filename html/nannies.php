@@ -7,6 +7,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: log_in_parent.php");
     exit();
 }
+
 $username = $_SESSION['username'];
 $parent_id = $_SESSION['parent_id'];
 
@@ -33,6 +34,18 @@ while ($row = $requests_result->fetch_assoc()) {
     $requests_status[$row['babysitter_id']] = $row['status'];
 }
 $requests_query->close();
+
+// Handle babysitter request submission
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['babysitter_id'])) {
+    $babysitter_id = $_POST['babysitter_id'];
+
+    // Prevent duplicate requests
+    if (!isset($requests_status[$babysitter_id])) {
+        $message = send_babysitter_request($con, $parent_id, $babysitter_id, $child_name);
+    } else {
+        $message = "You have already sent a request to this babysitter.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +79,7 @@ $requests_query->close();
         <div class="nav">
             <a href="hp_parent.php" class="nav-item">HOME</a>
             <a href="calendar_parent.php" class="nav-item">CALENDAR</a>
-            <a href="#" class="nav-item">NANNIES</a>
+            <a href="nannies.php" class="nav-item">NANNIES</a>
             <form action="logout.php" method="post" class="logout-form">
                 <button type="submit" class="logout-button">LOG OUT</button>
             </form>
@@ -74,6 +87,8 @@ $requests_query->close();
     </div>
     
     <div class="container">
+        <?php if (isset($message)) { echo "<p class='message'>$message</p>"; } ?>
+
         <?php while ($row = $result->fetch_assoc()) { 
             $profile_pic = !empty($row['profile_pic']) ? "../html/uploads_bby/" . htmlspecialchars($row['profile_pic']) : "../html/uploads_bby/default.png";
             $status = isset($requests_status[$row['id']]) ? $requests_status[$row['id']] : "none";
@@ -100,13 +115,15 @@ $requests_query->close();
             <div class="babysitter-box">
                 <img src="<?php echo $profile_pic; ?>" alt="Profile Picture" width="150" height="150">
                 <h3><?php echo htmlspecialchars($row['user_name']); ?></h3>
-                
-                <button class="<?= $button_class ?>" <?= $button_disabled ?> onclick="sendRequest(<?= $row['id'] ?>, this)">
-                    <?= $button_text ?>
-                </button>
+
+                <form method="POST">
+                    <input type="hidden" name="babysitter_id" value="<?= $row['id'] ?>">
+                    <button class="<?= $button_class ?>" <?= $button_disabled ?> type="submit">
+                        <?= $button_text ?>
+                    </button>
+                </form>
             </div>
         <?php } ?>
     </div>
 </body>
 </html>
-

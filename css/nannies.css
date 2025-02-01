@@ -102,12 +102,12 @@ button {
 }
 
 
-button:not(.pending, .accepted, .rejected, .logout-button) {
+button:not(.pending, .accepted, .rejected, .logout-button, .logout-button:hover) {
     background-color: #3498db;
     color: white;
 }
 
-button:not(.pending, .accepted, .rejected):hover {
+button:not(.pending, .accepted, .rejected, .logout-button, .logout-button:hover):hover {
     background-color: #2980b9;
     transform: scale(1.05);
 }
